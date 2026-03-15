@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PanamaApi.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
+using PanamaApi.Interfaces;
 
 namespace PanamaApi.Controllers
 {
@@ -17,6 +16,7 @@ namespace PanamaApi.Controllers
             _logger = logger;
         }
 
+        // GET api/v1/holidays
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int? year, [FromQuery] string? type)
         {
@@ -32,6 +32,7 @@ namespace PanamaApi.Controllers
             }
         }
 
+        // GET api/v1/holidays/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -40,7 +41,9 @@ namespace PanamaApi.Controllers
                 var holiday = await _holidayService.GetHolidayById(id);
 
                 if (holiday == null)
+                {
                     return NotFound(new { success = false, message = "Holiday not found", code = 404 });
+                }
 
                 return Ok(new { success = true, data = holiday });
             }

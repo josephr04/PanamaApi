@@ -1,6 +1,6 @@
 ﻿using PanamaApi.Models;
 
-namespace PanamaApi.Interface
+namespace PanamaApi.Interfaces
 {
     public interface IHolidayService
     {

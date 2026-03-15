@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PanamaApi.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
+using PanamaApi.Interfaces;
 
 namespace PanamaApi.Controllers
 {
@@ -17,6 +16,7 @@ namespace PanamaApi.Controllers
             _logger = logger;
         }
 
+        // GET api/v1/provinces
         [HttpGet]
         public async Task<IActionResult> GetProvinces()
         {
@@ -32,12 +32,13 @@ namespace PanamaApi.Controllers
             }
         }
 
-        [HttpGet("provinceId")]
-        public async Task<IActionResult> GetProvinceById(int provinceId)
+        // GET api/v1/provinces/id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProvinceById(int id)
         {
             try
             {
-                var province = await _locationService.GetProvinceById(provinceId);
+                var province = await _locationService.GetProvinceById(id);
                 if (province == null)
                 {
                     return NotFound(new { success = false, message = "Province not found", code = 404 });
@@ -46,22 +47,23 @@ namespace PanamaApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error retrieving province with ID {provinceId}");
+                _logger.LogError(ex, $"Error retrieving province with ID {id}");
                 return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
             }
         }
 
-        [HttpGet("{provinceId}/districts")]
-        public async Task<IActionResult> GetProvinceDistricts(int provinceId)
+        // GET api/v1/provinceId/districts
+        [HttpGet("{id}/districts")]
+        public async Task<IActionResult> GetProvinceDistricts(int id)
         {
             try
             {
-                var districts = await _locationService.GetProvinceDistricts(provinceId);
+                var districts = await _locationService.GetProvinceDistricts(id);
                 return Ok(new { success = true, data = districts });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error retrieving districts for province with ID {provinceId}");
+                _logger.LogError(ex, $"Error retrieving districts for province with ID {id}");
                 return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
             }
         }

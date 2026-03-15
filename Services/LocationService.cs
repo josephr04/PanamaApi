@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using PanamaApi.Interface;
+using PanamaApi.Interfaces;
 using PanamaApi.Models;
 using System.Data;
 

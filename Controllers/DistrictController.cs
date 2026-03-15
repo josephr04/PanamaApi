@@ -1,67 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PanamaApi.Interface;
+using PanamaApi.Interfaces;
 
-[ApiController]
-[Route("api/v1/districts")]
-public class DistrictsController : ControllerBase
+namespace PanamaApi.Controllers
 {
-    private readonly ILocationService _locationService;
-    private readonly ILogger<DistrictsController> _logger;
-
-    public DistrictsController(ILocationService locationService, ILogger<DistrictsController> logger)
+    [ApiController]
+    [Route("api/v1/districts")]
+    public class DistrictsController : ControllerBase
     {
-        _locationService = locationService;
-        _logger = logger;
-    }
+        private readonly ILocationService _locationService;
+        private readonly ILogger<DistrictsController> _logger;
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        try
+        public DistrictsController(ILocationService locationService, ILogger<DistrictsController> logger)
         {
-            var districts = await _locationService.GetDistricts();
-            return Ok(new { success = true, data = districts });
+            _locationService = locationService;
+            _logger = logger;
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting districts");
-            return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
-        }
-    }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        try
+        // GET api/v1/districts
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            var district = await _locationService.GetDistrictById(id);
-
-            if (district == null)
+            try
             {
-                return NotFound(new { success = false, message = "District not found", code = 404 });
+                var districts = await _locationService.GetDistricts();
+                return Ok(new { success = true, data = districts });
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting districts");
+                return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
+            }
+        }
 
-            return Ok(new { success = true, data = district });
-        }
-        catch (Exception ex)
+        // GET api/v1/districts/id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            _logger.LogError(ex, "Error getting district {Id}", id);
-            return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
-        }
-    }
+            try
+            {
+                var district = await _locationService.GetDistrictById(id);
 
-    [HttpGet("{id}/corregimientos")]
-    public async Task<IActionResult> GetCorregimientos(int id)
-    {
-        try
-        {
-            var corregimientos = await _locationService.GetDistrictCorregimientos(id);
-            return Ok(new { success = true, data = corregimientos });
+                if (district == null)
+                {
+                    return NotFound(new { success = false, message = "District not found", code = 404 });
+                }
+
+                return Ok(new { success = true, data = district });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting district {Id}", id);
+                return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
+            }
         }
-        catch (Exception ex)
+
+        // GET api/v1/districts/corregimientos
+        [HttpGet("{id}/corregimientos")]
+        public async Task<IActionResult> GetCorregimientos(int id)
         {
-            _logger.LogError(ex, "Error getting corregimientos for district {Id}", id);
-            return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
+            try
+            {
+                var corregimientos = await _locationService.GetDistrictCorregimientos(id);
+                return Ok(new { success = true, data = corregimientos });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting corregimientos for district {Id}", id);
+                return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
+            }
         }
     }
 }
