@@ -1,5 +1,6 @@
+using AspNetCoreRateLimit;
 using Npgsql;
-using PanamaApi.Interface;
+using PanamaApi.Interfaces;
 using PanamaApi.Services;
 using Scalar.AspNetCore;
 using System.Data;
@@ -14,8 +15,20 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Register application services
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IHolidayService, HolidayService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddScoped<IPresidentService, PresidentService>();
+
+// Rate Limiting configuration
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+builder.Services.AddInMemoryRateLimiting();
 
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -27,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseIpRateLimiting();
 
 app.UseHttpsRedirection();
 
