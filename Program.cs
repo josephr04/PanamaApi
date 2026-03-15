@@ -7,6 +7,9 @@ using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"CONNECTION STRING: {connectionString}");
+
 // Add services to the container.
 
 builder.Services.AddControllers();
