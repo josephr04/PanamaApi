@@ -7,7 +7,9 @@ using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 Console.WriteLine($"CONNECTION STRING: {connectionString}");
 
 // Add services to the container.
@@ -16,7 +18,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(connectionString));
 
 // Register application services
 builder.Services.AddScoped<ILocationService, LocationService>();
