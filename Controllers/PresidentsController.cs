@@ -17,12 +17,13 @@ namespace PanamaApi.Controllers
         }
 
         // GET api/v1/presidents
+        // GET api/v1/presidents?year=1999
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int? year)
         {
             try
             {
-                var presidents = await _presidentService.GetPresidents();
+                var presidents = await _presidentService.GetPresidents(year);
                 return Ok(new { success = true, data = presidents });
             }
             catch (Exception ex)

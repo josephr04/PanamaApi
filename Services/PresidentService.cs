@@ -14,9 +14,9 @@ namespace PanamaApi.Services
             _conexion = conexion;
         }
 
-        public async Task<IEnumerable<President>> GetPresidents()
+        public async Task<IEnumerable<President>> GetPresidents(int? year = null)
         {
-            return await _conexion.QueryAsync<President>("SELECT * FROM get_presidents()");
+            return await _conexion.QueryAsync<President>("SELECT * FROM get_presidents(@Year)", new { Year = year });
         }
 
         public async Task<President?> GetPresidentById(int id)
