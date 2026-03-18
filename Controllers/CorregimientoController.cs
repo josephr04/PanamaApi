@@ -16,22 +16,6 @@ namespace PanamaApi.Controllers
             _logger = logger;
         }
 
-        // GET api/v1/airports
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    try
-        //    {
-        //        var corregimientos = await _locationService.GetCorregimientos();
-        //        return Ok(new { success = true, data = corregimientos });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error getting corregimientos");
-        //        return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
-        //    }
-        //}
-
         // GET api/v1/corregimiento/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
