@@ -5,12 +5,12 @@ namespace PanamaApi.Controllers
 {
     [ApiController]
     [Route("api/v1/provinces")]
-    public class ProvinceController : ControllerBase
+    public class ProvincesController : ControllerBase
     {
         private readonly ILocationService _locationService;
-        private readonly ILogger<ProvinceController> _logger;
+        private readonly ILogger<ProvincesController> _logger;
 
-        public ProvinceController(ILocationService locationService, ILogger<ProvinceController> logger)
+        public ProvincesController(ILocationService locationService, ILogger<ProvincesController> logger)
         {
             _locationService = locationService;
             _logger = logger;
@@ -58,6 +58,11 @@ namespace PanamaApi.Controllers
         {
             try
             {
+                var province = await _locationService.GetProvinceById(id);
+                if (province == null)
+                {
+                    return NotFound(new { success = false, message = "Province not found", code = 404 });
+                }
                 var districts = await _locationService.GetProvinceDistricts(id);
                 return Ok(new { success = true, data = districts });
             }

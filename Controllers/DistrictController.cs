@@ -54,12 +54,19 @@ namespace PanamaApi.Controllers
             }
         }
 
-        // GET api/v1/districts/corregimientos
+        // GET api/v1/districtId/corregimientos
         [HttpGet("{id}/corregimientos")]
         public async Task<IActionResult> GetCorregimientos(int id)
         {
             try
             {
+                var district = await _locationService.GetDistrictById(id);
+
+                if (district == null)
+                {
+                    return NotFound(new { success = false, message = "District not found", code = 404 });
+                }
+
                 var corregimientos = await _locationService.GetDistrictCorregimientos(id);
                 return Ok(new { success = true, data = corregimientos });
             }
