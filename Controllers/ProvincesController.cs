@@ -58,12 +58,11 @@ namespace PanamaApi.Controllers
         {
             try
             {
-                //var province = await _locationService.GetProvinceById(id);
-                //if (province == null)
-                //{
-                //    return NotFound(new { success = false, message = "Province not found", code = 404 });
-                //}
-                //
+                var province = await _locationService.GetProvinceById(id);
+                if (province == null)
+                {
+                    return NotFound(new { success = false, message = "Province not found", code = 404 });
+                }
                 var districts = await _locationService.GetProvinceDistricts(id);
                 return Ok(new { success = true, data = districts });
             }
