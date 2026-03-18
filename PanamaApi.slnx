@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../PanamaApi.Tests/PanamaApi.Tests.csproj" Id="76407ac9-b14b-40a1-9569-bf566a06c4f5" />
   <Project Path="PanamaApi.csproj" />
 </Solution>
