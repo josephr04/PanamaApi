@@ -49,15 +49,9 @@ namespace PanamaApi.Services
             return await _conexion.QueryAsync<Corregimiento>("SELECT * FROM get_district_corregimientos(@Id)", new { Id = districtId });
         }
 
-        // Corregimiento-related methods
-        //public async Task<IEnumerable<Corregimiento>> GetCorregimientos()
-        //{
-        //    return await _conexion.QueryAsync<Corregimiento>("SELECT * FROM get_corregimientos()");
-        //}
-
-        public async Task<Corregimiento?> GetCorregimientoById(int id)
+        public async Task<Corregimiento?> GetCorregimientoById(int corregimientoId)
         {
-            return await _conexion.QueryFirstOrDefaultAsync<Corregimiento>("SELECT * FROM get_corregimiento_by_id(@Id)", new { Id = id });
+            return await _conexion.QueryFirstOrDefaultAsync<Corregimiento>("SELECT * FROM get_corregimiento_by_id(@Id)", new { Id = corregimientoId });
         }
     }
 }

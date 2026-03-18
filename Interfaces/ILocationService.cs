@@ -11,11 +11,10 @@ namespace PanamaApi.Interfaces
 
         // District-related methods
         Task<IEnumerable<District>> GetDistricts();
-        Task<District?> GetDistrictById(int id);
+        Task<District?> GetDistrictById(int districtId);
         Task<IEnumerable<Corregimiento>> GetDistrictCorregimientos(int districtId);
 
         // Corregimiento-related methods
-        //Task<IEnumerable<Corregimiento>> GetCorregimientos();
-        Task<Corregimiento?> GetCorregimientoById(int id);
+        Task<Corregimiento?> GetCorregimientoById(int corregimientoId);
     }
 }
