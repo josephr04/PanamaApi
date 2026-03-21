@@ -6,7 +6,7 @@ All data comes from reliable sources such as government websites, official stati
 
 Our main goal is to keep the API free, reliable, and useful for developers building applications related to Panama. As the project evolves, we plan to add more datasets such as tourist sites, universities, typical food, and more.
 
-**This project is currently under development, meaning things could change!**
+**Note: This project is currently under development, meaning things could change!**
 
 ## Demo
 https://panama-api.up.railway.app
