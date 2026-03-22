@@ -47,7 +47,7 @@ namespace PanamaApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving province with ID {id}", id);
+                _logger.LogError(ex, "Error retrieving province with ID {Id}", id);
                 return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
             }
         }
@@ -68,7 +68,7 @@ namespace PanamaApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving districts for province with ID {id}", id);
+                _logger.LogError(ex, "Error retrieving districts for province with ID {Id}", id);
                 return StatusCode(500, new { success = false, message = "Internal server error", code = 500 });
             }
         }
